@@ -14,6 +14,7 @@ const app = express();
 // Routes files
 const wells = require('./routes/wells')
 const contractors = require('./routes/contractors')
+const medias = require('./routes/medias')
 // Body parser
 app.use(express.json())
 
@@ -25,6 +26,7 @@ if(process.env.NODE_ENV === 'development') {
 // Mount routers
 app.use('/api/v1/wells', wells)
 app.use('/api/v1/contractors', contractors)
+app.use('/api/v1/medias', medias)
 const PORT = process.env.PORT || 7000
  
 
