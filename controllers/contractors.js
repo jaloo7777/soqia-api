@@ -15,12 +15,7 @@ exports.getContractors = asyncHandler(  async (req,res,next) => {
   
 
     const contractors = await query
-    res.status(200).json({
-        success: true,
-        count: contractors.length,
-        data: contractors
-
-    }) 
+    res.status(200).json(res.advancedResults) 
 
 }) 
 // @desc     Get a single contractor

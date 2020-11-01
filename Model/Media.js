@@ -11,8 +11,8 @@ const MediaSchema = new mongoose.Schema({
         default: Date.now
     },
     photo: {
-        type: String,
-        default: "no-photo.jpg",
+        type: [String],
+        default: ["no-photo.jpg"],
       },
     dateOfUpload: {
         type: Date,

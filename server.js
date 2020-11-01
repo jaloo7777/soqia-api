@@ -1,7 +1,9 @@
+const path = require('path')
 const express = require('express')
 const dotenv = require('dotenv')
 const colors = require('colors')
 const morgan = require('morgan')
+const fileUpload = require('express-fileupload')
 const connectDB = require('./config/db')
 const errorHandler = require('./middleware/error')
 
@@ -11,6 +13,11 @@ dotenv.config({path:'./config/config.env'})
 connectDB();
 const app = express();
 
+//File Upload
+app.use(fileUpload())
+
+// Set static folder
+app.use(express.static(path.join(__dirname,'public') ))
 // Routes files
 const wells = require('./routes/wells')
 const contractors = require('./routes/contractors')
