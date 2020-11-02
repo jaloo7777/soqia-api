@@ -40,7 +40,7 @@ const PORT = process.env.PORT || 7000
  
 
 
-
+//Error middleware
 app.use(errorHandler)
 const server = app.listen(PORT,console.log( `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold))
 

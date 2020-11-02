@@ -1,0 +1,23 @@
+[33mcommit f69efd50e78c992e9dadbcf9a4e15108998c3ec6[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Abduljalil Barnawi <jaloo7777@gmail.com>
+Date:   Mon Nov 2 09:59:43 2020 +0530
+
+    added a User Model and a basic auth routes & controlers
+
+[33mcommit 30908a8fdcb9411b7a843ae2d09f044555909a6c[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Abduljalil Barnawi <jaloo7777@gmail.com>
+Date:   Mon Nov 2 01:21:31 2020 +0530
+
+     implemnted Uploading photos to media &  added some functionality to media and added also advancedResults folder
+
+[33mcommit e31c754874ed15250ee33280926583a27e479efd[m
+Author: Abduljalil Barnawi <jaloo7777@gmail.com>
+Date:   Sun Nov 1 21:05:47 2020 +0530
+
+    added media Model  Routes and Controllers 'basics'
+
+[33mcommit 99a492d6d962e7afb70e7c10341b80853ce81fce[m
+Author: Abduljalil Barnawi <jaloo7777@gmail.com>
+Date:   Fri Oct 30 00:09:38 2020 +0530
+
+    initial commit for CharityApp done with the basics of wells and contractors ...
