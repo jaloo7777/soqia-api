@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname,'public') ))
 const wells = require('./routes/wells')
 const contractors = require('./routes/contractors')
 const medias = require('./routes/medias')
+const auth = require('./routes/auth')
 // Body parser
 app.use(express.json())
 
@@ -34,6 +35,7 @@ if(process.env.NODE_ENV === 'development') {
 app.use('/api/v1/wells', wells)
 app.use('/api/v1/contractors', contractors)
 app.use('/api/v1/medias', medias)
+app.use('/api/v1/auth', auth)
 const PORT = process.env.PORT || 7000
  
 
