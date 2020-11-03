@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const dotenv = require('dotenv')
 const colors = require('colors')
+const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const fileUpload = require('express-fileupload')
 const connectDB = require('./config/db')
@@ -16,6 +17,8 @@ const app = express();
 //File Upload
 app.use(fileUpload())
 
+// CookieParser
+app.use(cookieParser())
 // Set static folder
 app.use(express.static(path.join(__dirname,'public') ))
 // Routes files

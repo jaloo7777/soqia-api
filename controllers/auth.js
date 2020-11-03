@@ -10,14 +10,8 @@ exports.register = asyncHandler(async (req,res,next) => {
     const {name,role,email,password} = req.body
     const user = await User.create({name,role,email,password});
 
-    // Create token
-    const token = user.getSignedJwtToken();
-    console.log(token)
-    res.status(200).json({ 
-        success: true,
-        data: user,
-        token
-    })
+    
+    sendTokenResponse(user,200,res)
 })      
 
 
@@ -46,9 +40,29 @@ exports.login = asyncHandler(async (req,res,next) => {
     // Create token
     const token = user.getSignedJwtToken();
     
-    res.status(200).json({
-        success: true,
-        token
-    })
+    sendTokenResponse(user,200,res)
  
 })      
+
+
+// Get token from model & Create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
+       // Create token
+       const token = user.getSignedJwtToken();
+
+       const options = {
+           expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 *1000) , // 30days
+           httpOnly: true  // httpOnly : true, will make the cookie access only from the clinet side scripts (frontEnd)
+       }
+
+       if(process.env.NODE_ENV === 'production') {
+           options.secure = true
+       }
+       res
+        .status(statusCode)
+        .cookie('token',token,options)                         //cookie('the name we want to name the cookie', value/keys, options)
+        .json({
+            success: true,
+            token
+        })
+}
