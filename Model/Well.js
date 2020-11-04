@@ -62,6 +62,11 @@ const WellSchema = new mongoose.Schema({
       type: mongoose.Schema.ObjectId,
       ref: 'Contractor',
       required: false
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
   }
 })
 

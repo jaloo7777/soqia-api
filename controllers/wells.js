@@ -54,7 +54,8 @@ exports.getWell = asyncHandler(  async (req,res,next) => {
 // @access   Private
 exports.createWell = asyncHandler( async (req,res,next) => {
 
-   
+// Add user to req.body
+req.body.user = req.user.id   
         const well = await Well.create(req.body)
        
         res.status(201).json({ 
