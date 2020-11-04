@@ -1,16 +1,19 @@
 const express = require('express')
+const Well = require('../Model/Well')
 
 const router = express.Router({mergeParams: true});
 
 const {getWell,getWells,createWell,updateWell,deleteWell, addeWell} = require('../controllers/wells')
-const Well = require('../Model/Well')
+const {addContractor} = require('../controllers/contractors')
 const advancedResults = require('../middleware/advancedResults')
 const {protect,authorize} = require('../middleware/auth')
 // Include other resource routers
 const contractorRouter = require('./contractors')
 // // Re-route into other resource routers &&& we have to mergeParam: true in the root of the file
 // // here to contractors
-router.use('/:wellId/contractors', contractorRouter)
+// router.use('/:wellId/contractors', contractorRouter)
+
+router.route('/:wellId/contractors').post(protect,authorize('publisher','admin'), addContractor)
 
 router.route('/')
 .get(advancedResults(Well,{path: 'contractor',select: ' executor '}), getWells)

@@ -53,7 +53,6 @@ exports.getWell = asyncHandler(  async (req,res,next) => {
 // @route    Post /api/v1/wells
 // @access   Private
 exports.createWell = asyncHandler( async (req,res,next) => {
-
 // Add user to req.body
 req.body.user = req.user.id   
         const well = await Well.create(req.body)
@@ -71,20 +70,26 @@ req.body.user = req.user.id
 // @route    Post /api/v1/contractors/:contractorId/wells
 // @access   Private
 exports.addeWell = asyncHandler( async (req,res,next) => {
-// console.log(req.body.contractor)
-// console.log(req.params.id)
-console.log('hollllllllla')
+
     req.body.contractor = req.params.contractorId
-   
+    req.body.user = req.user.id
+
     const contractor = await Contractor.findById(req.params.contractorId)
    
     if(!contractor) {
         return next (
-            new ErrorResponse(`No contractor with the id of ${req.params.con}`,404)
+            new ErrorResponse(`No contractor with the id of ${req.params.contractorId}`,404)
         )
     }
 
+    // Make sure user is well owner
+    if(contractor.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorResponse(`User ${req.user.id} is not authorized to add to this well ${contractor._id}`,401))
+        
+    }
+    
     const well = await Well.create(req.body)
+    
     res.status(201).json({ 
         success: true,
         data: well
@@ -97,14 +102,20 @@ console.log('hollllllllla')
 // @access   Private
 exports.updateWell = asyncHandler(  async (req,res,next) => {
 
-    const well =  await Well.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true
-    })
+    let well =  await Well.findById(req.params.id)
 
     if(!well) {
         return next(new ErrorResponse(`Well not found with id of ${req.params.id}`,404))
     }
+    // Make sure user is well owner
+    if(well.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorResponse(`User ${req.params.id} is not authorized to update this well`,401))
+
+    }
+    well =  await Well.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    })
     res.status(200).json({
         success: true,
         data: well
@@ -118,11 +129,17 @@ exports.updateWell = asyncHandler(  async (req,res,next) => {
 exports.deleteWell = asyncHandler( async (req,res,next) => {
 
 
-        const well = await Well.findByIdAndDelete(req.params.id)
+        let well = await Well.findById(req.params.id)
         if(!well) {
           return  next(new ErrorResponse(`Well not found with id of ${req.params.id}`,404))
         }
-        
+          // Make sure user is well owner
+    if(well.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorResponse(`User ${req.params.id} is not authorized to delete this well`,401))
+
+    }
+
+    well = await Well.findByIdAndDelete(req.params.id)
         res.status(200).json({
             success: true,
             data:{}

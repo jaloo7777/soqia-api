@@ -13,7 +13,7 @@ router.route('/:contractorId/wells').get(getWells).post(protect, authorize('publ
 router.route('/')
 .get(advancedResults(Contractor,{path:'wells', select: 'name'}) ,getContractors)
 .post(protect, authorize('publisher','admin'), createContractor)
-.post(protect,  authorize('publisher','admin'),addContractor)
+// .post(protect,  authorize('publisher','admin'), addContractor)
 
 router.route('/:id')
 .get(getContractor)
