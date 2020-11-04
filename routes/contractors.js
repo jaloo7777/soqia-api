@@ -1,6 +1,6 @@
 const express = require('express');
 const {getContractors, getContractor,updateContractor,addContractor, deleteContractor ,createContractor} = require('../controllers/contractors');
-const {protect} = require('../middleware/auth')
+const {protect,authorize} = require('../middleware/auth')
 const router = express.Router({mergeParams: true});
 const {getWells,addeWell} = require('../controllers/wells')
 const wellRouter = require('./wells')
@@ -9,16 +9,16 @@ const advancedResults = require('../middleware/advancedResults')
 
 
 // router.use('/:contractorId/wells', wellRouter)
-router.route('/:contractorId/wells').get(getWells).post(protect, addeWell)
+router.route('/:contractorId/wells').get(getWells).post(protect, authorize('publisher','admin'), addeWell)
 router.route('/')
 .get(advancedResults(Contractor,{path:'wells', select: 'name'}) ,getContractors)
-.post(protect, createContractor)
-.post(protect, addContractor)
+.post(protect, authorize('publisher','admin'), createContractor)
+.post(protect,  authorize('publisher','admin'),addContractor)
 
 router.route('/:id')
 .get(getContractor)
-.delete(protect, deleteContractor)
-.put(protect, updateContractor)
+.delete(protect, authorize('publisher','admin'), deleteContractor)
+.put(protect,  authorize('publisher','admin'),updateContractor)
 
 
 
