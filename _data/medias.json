@@ -5,7 +5,8 @@
         "deleveryDate": "2019/10/09",
         "photo": "null",
         "dateOfUpload": "2019/10/10",
-        "description": " "
+        "description": " ",
+        "user":"5d7a514b5d2c12c7449be047"
     },
     {
         "_id": "5d713995b721c3bb38c1f5d1",
@@ -13,7 +14,8 @@
         "deleveryDate": "2019/10/09",
         "photo": "null",
         "dateOfUpload": "2019/10/10",
-        "description": " "
+        "description": " ",
+        "user":"5d7a514b5d2c12c7449be047"
     },
     {
         "_id": "5d713995b721c3bb38c1f5d2",
@@ -21,7 +23,8 @@
         "deleveryDate": "2019/10/09",
         "photo": "null",
         "dateOfUpload": "2019/10/10",
-        "description": " "
+        "description": " ",
+        "user":"5d7a514b5d2c12c7449be047"
     }
    
 ]

@@ -21,7 +21,12 @@ const MediaSchema = new mongoose.Schema({
     description: {
         type: String,
         required: false
-    }
+    },
+     user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+      }
 
 })
 

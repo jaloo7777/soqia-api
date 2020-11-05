@@ -48,12 +48,10 @@ exports.getMedia = asyncHandler( async (req,res,next) => {
 // @route    Post /api/v1/medias/
 // @access   Private
 exports.createMedia = asyncHandler( async (req,res,next) => {
-
-
+    req.body.user = req.user.id
+ 
     const media = await Media.create(req.body)
-   
-    
-  
+
     res.status(200).json({
         success: true,
         data:media

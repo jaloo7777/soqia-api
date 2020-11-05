@@ -33,5 +33,12 @@
 		"email": "kevin@gmail.com",
 		"role": "publisher",
 		"password": "123456"
+	},
+	{
+		"_id": "5d7a514b5d2c12c7449be047",
+		"name": "Wafa",
+		"email": "wafa@gmail.com",
+		"role": "media",
+		"password": "123456"
 	}
 ]
