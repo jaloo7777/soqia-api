@@ -41,8 +41,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre('save', async function(next) {
 
   // if we did not add this if statment there will be an issue cuz of the  (Get reset token) in auth controller cuz we want to save without password
-   
-    await user.save({validateBeforeSave: false})
+  // await user.save({validateBeforeSave: false})  So now this function will run only if this password is modifeid
 
   if(!this.isModified('password')) {
     next()
