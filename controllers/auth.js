@@ -45,27 +45,6 @@ exports.login = asyncHandler(async (req,res,next) => {
 })      
 
 
-// Get token from model & Create cookie and send response
-const sendTokenResponse = (user, statusCode, res) => {
-       // Create token
-       const token = user.getSignedJwtToken();
-
-       const options = {
-           expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 *1000) , // 30days
-           httpOnly: true  // httpOnly : true, will make the cookie access only from the clinet side scripts (frontEnd)
-       }
-
-       if(process.env.NODE_ENV === 'production') {
-           options.secure = true
-       }
-       res
-        .status(statusCode)
-        .cookie('token',token,options)                         //cookie('the name we want to name the cookie', value/keys, options)
-        .json({
-            success: true,
-            token
-        })
-}
 
 // @desc     Register a User
 // @route    Post /api/v1/auth/me
@@ -79,3 +58,56 @@ exports.getMe = asyncHandler( async (req,res,next) => {
         data: user
     })
 })
+
+
+
+// @desc     Register a User
+// @route    Post /api/v1/auth/forgotpassword
+// @access   Public
+exports.forgotPassword = asyncHandler( async (req,res,next) => {
+    const user = await User.findOne({email: req.body.email}) 
+
+    if(!user) {
+        return next(new ErrorResponse('There is no user with that email',401))
+    }
+
+    // Get reset token 
+    const resetToken = user.getResetPasswordToken()
+    await user.save({validateBeforeSave: false})
+    res.status(200).json({
+        success: true,
+        data: user
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+// Get token from model & Create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
+    // Create token
+    const token = user.getSignedJwtToken();
+
+    const options = {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 *1000) , // 30days
+        httpOnly: true  // httpOnly : true, will make the cookie access only from the clinet side scripts (frontEnd)
+    }
+
+    if(process.env.NODE_ENV === 'production') {
+        options.secure = true
+    }
+    res
+     .status(statusCode)
+     .cookie('token',token,options)                         //cookie('the name we want to name the cookie', value/keys, options)
+     .json({
+         success: true,
+         token
+     })
+}
