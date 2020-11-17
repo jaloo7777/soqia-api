@@ -26,21 +26,23 @@ const wells = require('./routes/wells')
 const contractors = require('./routes/contractors')
 const medias = require('./routes/medias')
 const auth = require('./routes/auth')
+const users = require('./routes/users')
 // Body parser
 app.use(express.json())
 
 // dev loggin middleware
 if(process.env.NODE_ENV === 'development') {   
     app.use(morgan('dev'))
-}
+}  
 
 // Mount routers
 app.use('/api/v1/wells', wells)
 app.use('/api/v1/contractors', contractors)
 app.use('/api/v1/medias', medias)
 app.use('/api/v1/auth', auth)
+app.use('/api/v1/users', users) 
 const PORT = process.env.PORT || 7000
- 
+  
 
 
 //Error middleware
