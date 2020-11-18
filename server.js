@@ -4,7 +4,9 @@ const dotenv = require('dotenv')
 const colors = require('colors')
 const cookieParser = require('cookie-parser')
 const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet')
 const morgan = require('morgan')
+const xss = require('xss-clean')
 const fileUpload = require('express-fileupload')
 const connectDB = require('./config/db')
 const errorHandler = require('./middleware/error')
@@ -34,7 +36,11 @@ app.use(mongoSanitize())  // Prevent nosql injection sanitize data
  // "email": {"$gt":""},"password": "123456" this way if we got the password correct we can log in without the email  that why we do use sanatize
 
 
+ // Set security headers
+ app.use(helmet())
 
+ // Prevent XSS attacks  it means we dont want html scripts to be added within a body
+app.use(xss())
 
 
 // Set static folder
