@@ -3,6 +3,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const colors = require('colors')
 const cookieParser = require('cookie-parser')
+const mongoSanitize = require('express-mongo-sanitize')
 const morgan = require('morgan')
 const fileUpload = require('express-fileupload')
 const connectDB = require('./config/db')
@@ -14,11 +15,28 @@ dotenv.config({path:'./config/config.env'})
 connectDB();
 const app = express();
 
+// Body parser
+app.use(express.json())
+
+// dev loggin middleware
+if(process.env.NODE_ENV === 'development') {   
+    app.use(morgan('dev'))
+}  
+
+
 //File Upload
 app.use(fileUpload())
 
 // CookieParser
 app.use(cookieParser())
+
+app.use(mongoSanitize())  // Prevent nosql injection sanitize data  
+ // "email": {"$gt":""},"password": "123456" this way if we got the password correct we can log in without the email  that why we do use sanatize
+
+
+
+
+
 // Set static folder
 app.use(express.static(path.join(__dirname,'public') ))
 // Routes files
@@ -27,13 +45,7 @@ const contractors = require('./routes/contractors')
 const medias = require('./routes/medias')
 const auth = require('./routes/auth')
 const users = require('./routes/users')
-// Body parser
-app.use(express.json())
 
-// dev loggin middleware
-if(process.env.NODE_ENV === 'development') {   
-    app.use(morgan('dev'))
-}  
 
 // Mount routers
 app.use('/api/v1/wells', wells)
