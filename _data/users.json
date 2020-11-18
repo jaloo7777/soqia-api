@@ -11,7 +11,7 @@
 		"name": "Publisher Account",
 		"email": "publisher@gmail.com",
 		"role": "publisher",
-		"password": "123456"
+		"password": "1234567"
 	},
 	{
 		"_id": "5d7a514b5d2c12c7449be044",
@@ -39,6 +39,6 @@
 		"name": "Wafa",
 		"email": "wafa@gmail.com",
 		"role": "media",
-		"password": "123456"
+		"password": "wafaaa"
 	}
 ]

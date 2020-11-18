@@ -45,6 +45,22 @@ exports.login = asyncHandler(async (req,res,next) => {
 })      
 
 
+// @desc     LogOut a User
+// @route    Post /api/v1/auth/me
+// @access   Private
+exports.logOut = asyncHandler( async (req,res,next) => {
+  // we will clear the cookie with the logOut
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * 1000),   // 10 minutes
+    httpOnly: true
+  })
+  res.status(200).json({
+      success: true,
+      data: {}
+  })
+})
+
+
 
 // @desc     Register a User
 // @route    Post /api/v1/auth/me
