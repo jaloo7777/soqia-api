@@ -7,6 +7,9 @@ const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const xss = require('xss-clean')
+const rateLimit = require('express-rate-limit')
+const hpp = require('hpp')
+const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const connectDB = require('./config/db')
 const errorHandler = require('./middleware/error')
@@ -42,6 +45,20 @@ app.use(mongoSanitize())  // Prevent nosql injection sanitize data
  // Prevent XSS attacks  it means we dont want html scripts to be added within a body
 app.use(xss())
 
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 100  // limit each IP to 100 requests per windowMs
+  });
+   
+//  apply to all requests
+app.use(limiter);
+    
+// Prevent hpp param polloution
+app.use(hpp())
+
+// Enable CORS
+app.use(cors())
 
 // Set static folder
 app.use(express.static(path.join(__dirname,'public') ))

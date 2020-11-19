@@ -53,7 +53,7 @@ exports.createMedia = asyncHandler( async (req,res,next) => {
     const media = await Media.create(req.body)
 
     res.status(200).json({
-        success: true,
+        success: true, 
         data:media
 
     })
@@ -66,10 +66,10 @@ exports.createMedia = asyncHandler( async (req,res,next) => {
 // @route    Put /api/v1/medias/:id
 // @access   Private
 exports.updateMedia = asyncHandler( async (req,res,next) => {
-
+ 
 
     const media = await Media.findByIdAndUpdate(req.params.id, req.body, {
-        new : true,
+        new : true, 
         runValidators: true
     })
     if(!media) {
@@ -81,7 +81,7 @@ exports.updateMedia = asyncHandler( async (req,res,next) => {
         data: media
 
     })
-
+ 
 
 })
 
@@ -91,10 +91,10 @@ exports.updateMedia = asyncHandler( async (req,res,next) => {
 exports.deleteMedia = asyncHandler( async (req,res,next) => {
 
 
-    const media = await Media.findById(req.params.id)
+    const media = await Media.findById(req.params.id)  
     if(!media) {
       return  next(new ErrorResponse(`Media not found with id of ${req.params.id}`,404))
-    }
+    } 
     
     media.remove()
     res.status(200).json({
